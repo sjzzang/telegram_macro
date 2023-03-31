@@ -7,8 +7,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -lcurl -pthread")
 find_package(Threads REQUIRED)
 find_package(Boost REQUIRED)
 find_package(CURL REQUIRED)
+find_package(jsoncpp REQUIRED)
 
 set(CURL_LIBRARY "-lcurl")
+set(CMAKE_THREAD_LIBS_INIT "-lpthread")
 set(CMAKE_THREAD_LIBS_INIT "-lpthread")
 
 include_directories(
@@ -24,13 +26,14 @@ file(GLOB _cpp_files "source/*.cpp")
 
 add_executable(telegram_macro
         ${_cpp_files}
-        sj_lib/source/util/util.cpp sj_lib/source/util/util.h)
+        sj_lib/source/util/util.cpp sj_lib/source/util/util.h sj_lib/source/log/log.cpp sj_lib/source/log/log.h)
 
 target_link_libraries(telegram_macro
         telegramagent
         xthread
         util
         ${CURL_LIBRARIES}
+        jsoncpp_lib
         )
 
 add_subdirectory(sj_lib/source/util util)
