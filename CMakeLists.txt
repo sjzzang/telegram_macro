@@ -11,7 +11,6 @@ find_package(jsoncpp REQUIRED)
 
 set(CURL_LIBRARY "-lcurl")
 set(CMAKE_THREAD_LIBS_INIT "-lpthread")
-set(CMAKE_THREAD_LIBS_INIT "-lpthread")
 
 include_directories(
         sj_lib/include
@@ -26,18 +25,22 @@ file(GLOB _cpp_files "source/*.cpp")
 
 add_executable(telegram_macro
         ${_cpp_files}
-        sj_lib/source/util/util.cpp sj_lib/source/util/util.h sj_lib/source/log/log.cpp sj_lib/source/log/log.h)
+   )
 
+target_include_directories(
+        telegram_macro PRIVATE ${ICU_INCLUDE_DIR}
+)
 target_link_libraries(telegram_macro
+        ${CURL_LIBRARIES}
+        ${BOOST_LIBRARIES}
+        ${ICU_LIBRARIES}
         telegramagent
         xthread
         util
-        ${CURL_LIBRARIES}
         jsoncpp_lib
         )
 
-add_subdirectory(sj_lib/source/util util)
-add_subdirectory(sj_lib/source/xthread xthread)
-add_subdirectory(sj_lib/source/telegram_agent telegramagent)
+
+
 
 
